@@ -1,0 +1,840 @@
+inf comandos: https://blog.desdelinux.net/mas-de-400-comandos-para-gnulinux-que-deberias-conocer/
+
+key: key.pem
+
+
+
+cp key.pem /home/user
+
+
+
+chmod 400 key.pem
+ssh -i key.pem ec2-user@34.205.69.52
+
+with public dns:
+ssh -i "key.pem.pem" ec2-user@ec2-34-205-69-52.compute-1.amazonaws.com
+
+-----------
+MobaXterm
+WSL2
+-----------
+
+============================
+FILES AND DIRECTORIES
+============================
+sudo su -
+sudo -i
+pwd          //present working directory
+ls /
+
+Directory Name:
+/  - This is top level directory
+   - It is parent direcory for all other directories, It is called ROOT directory,
+   - //C:\ of windows
+
+/root  - it is home directory for root user (super user)
+       - it provides working environment for root user
+        - //C:\Documents and Settings\Administrator
+
+/home  -it is home directory for other users
+       -it provide working environment for other users (other than it provide working evironment for other users[other that root])
+
+/usr   -by default sofwares are installed in /usr directory
+       -(UNIX Sharable Resources)
+
+/bin   -it contains commands used by all users
+       -(Binary files)
+
+/sbin  -it contains commands used by only Super User (root)
+       -(super user's binaty files)
+
+/var   -it is containing variable data like mails, log files
+
+
+----
+date - fecha
+Fri Mar  5 17:29:11 UTC 2021
+
+cal  - calendario
+March 2021
+Su Mo Tu We Th Fr Sa
+    1  2  3  4  5  6
+ 7  8  9 10 11 12 13
+14 15 16 17 18 19 20
+21 22 23 24 25 26 27
+28 29 30 31
+
+uptime - tiempo de actividad
+17:33:47 up  1:04,  2 users,  load average: 0.00, 0.00, 0.00
+
+whoami  - usuario logueado
+root
+ec2-user
+
+id
+uid=0(root) gid=0(root) groups=0(root) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+who
+ec2-user pts/0        2021-03-05 16:30 (180.130.20.130)  <- public ip de personal
+ec2-user pts/1        2021-03-05 16:35 (180.130.20.130)
+
+
+w
+17:39:28 up  1:10,  2 users,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+ec2-user pts/0    180.130.20.130   16:30    3:04   0.00s  0.00s -bash
+ec2-user pts/1    180.130.20.130   16:35    0.00s  0.03s  0.00s sshd: ec2-user [priv]
+
+
+man <command>
+man who
+-----------
+Read file
+-----------
+ls
+cat
+less     -view a file page by page
+more     -output the contents of file
+head     -output the first 10 lines of file
+tail     -output the last 10 lines of file
+
+head -20 anaconda-ks.cfg
+tail -20 anaconda-ks.cfg
+
+-----------
+Create File
+-----------
+touch <name file>
+
+ls -l -t    -t:timestamp  -listar archivos ordenado desde el mas reciente
+
+ls -l -t -r   -r:reverse
+
+ls -ltr
+
+--
+cat > test1       //crea y escribe contenido en el archivo, si ya tiene contenido lo sobreescribe
+
+nano
+
+vi
+=============================================================
+vi Commands 
+
+i - Insert at cursor (goes into insert mode)
+a - Write after cursor (goes into insert mode)
+A - Write at the end of line (goes into insert mode)
+ESC - Terminate insert mode
+u - Undo last change
+U - Undo all changes to the entire line
+o - Open a new line (goes into insert mode)
+dd - Delete line
+3dd - Delete 3 lines.
+D - Delete contents of line after the cursor
+C - Delete contents of a line after the cursor and insert new text. Press ESC key to end insertion.
+dw - Delete word
+4dw - Delete 4 words
+cw - Change word
+x - Delete character at the cursor
+r - Replace character
+R - Overwrite characters from cursor onward
+s - Substitute one character under cursor continue to insert
+S - Substitute entire line and begin to insert at the beginning of the line
+~ - Change case of individual character
+
+Moving within a file
+
+k - Move cursor up
+j - Move cursor down
+h - Move cursor left
+l - Move cursor right
+
+Saving and Closing the file
+
+Shift+zz - Save the file and quit
+:w - Save the file but keep it open
+:q - Quit without saving
+:wq - Save the file and quit
+=============================================================
+-----------
+Edit or Append Content to a File
+-----------
+yum install nano -y    -y: yes
+nano <name_file>
+
+cat >> test4     //agrega el contenido alfinal del archivo, NO sobreescribe lo que ya tiene
+
+
+-----------
+Create Directories
+-----------
+mkdir Dir1
+mkdir dir1 dir2 dir3
+
+
+-----------
+Remove files and Directories
+-----------
+sudo apt install tree
+yum install tree -y
+
+tree
+.
+├── aws-linux
+│   ├── keyt.pem
+│   └── key.pem
+├── dir1
+├── dir2
+├── dir2,
+├── dir3
+├── test
+│   └── test
+└── test2
+    └── testing
+
+rm file1 file2
+rm -f file3
+
+rmdir dir1
+
+rm -f -r dir1
+rm -rf dir1               -r: recursive
+
+rm -rf *
+
+============================
+MANAGE FILES AND DIRECTORIES
+============================
+//copiar contenido de un archivo a otro
+cp file1 file2
+
+//copia la carpeta completa a otro directorio (incluye la carpeta padres en este caso dir3)
+//sino existe la carpeta destino la crea
+cp -R dir3 dir2
+cp -R dir3 dir55
+
+
+mv file2 dir2
+//rename file
+mv file2 file3
+
+
+cd ..
+cd temp
+cd /root/dir1
+pwd
+
+cd ..
+cd ../root/dir
+
+find:
+find / -option filename      -option:  -name, .user, -group
+
+
+find / -name file1
+
+//ver diferencia
+diff file1 file2
+
+1c1                           //diferencia en la primera linea del primer archivo vs primera linea del segundo archivo
+< asdasadasdasadaaofsaof
+---
+> aofsaof
+
+6d5                            //sexta linea vs 5 linea
+< lolololol
+
+
+file file3
+  file3: ASCII text
+file dir2
+  dir2: directory
+
+cd /dev
+
+file zero
+zero: character special (1/5)
+
+file ram14
+ram14: block special (1/14)
+
+ls -l
+crw-rw-rw- 1 root root   1,   5 Mar  5 11:05 zero
+
+------------
+GREP
+------------
+Grep command
+Grep stands for Global Regular Expression Print.
+It is used to pick the required expression from the file and print the output
+
+grep <patron> filename
+
+
+grep Permit /etc/ssh/sshd_config
+grep PERMIT /etc/ssh/sshd_config
+grep -i PERMIT /etc/ssh/sshd_config       //LOWERCASE OR UPPERCASE
+
+check out that particular file out of directory exist or not
+cd /etc
+ls -l | grep environment
+
+//^ - starting character
+ls -l | grep ^d
+
+
+----
+SED
+----
+Sed command
+stands for stram editor, which is used to search a word in the file and replace it with
+the word required to be in the output
+Note: it will only modify the output, but there will be no change in the original file
+-s  search
+-g  global
+-n  number
+
+sed 's/old_text/new_text/' file_name
+sed 's/<palabra a buscar>/<palabra para colocar como reemplazo>/' file_name
+
+sed 's/old_text/new_text/g' file_name
+sed -i 's/old_text/new_text/' file_name   //update the file
+sed -n '5,10p' file_name
+sed '10,20d' file_name
+
+sed 's/ansible/linux/' file1
+
+//para reemplazar sim importar matusculas y minusculas
+sed 's/ansible/linux/ig' file1
+
+//cambiar archivo actual
+sed -i 's/ansible/linux/ig' file1
+
+//mostrar desde la linea 5 hasta la 10
+sed -n '5,10p' file_name
+
+//delete
+sed '10,20d' file_name
+
+//quitar el # del archivo
+sed 's/#/ /' file1
+
+
+==================
+User Management
+==================
+In linux there are three types of users
+
+1. Super or root user: User is the most powerful user. He us the administrator user.
+2. System user: Users created by the softwares or applications
+3. Normal user: Normal users are the users created by root user
+
+Type          Example           Home Directory       Shell
+Super User    Root              /root                /bin/bash
+System User   ftp, ssh, apache  /var,/ftp,etc        /sbin/nologin
+Normal user   visitor, ec2-user /home/username       /bin/bash
+
+whoami
+id root
+
+cat /etc/passwd
+cat /etc/group
+
+Whenever a user is created in Linux, below things happen by default.
+ - A home directory is created(/home/username)
+ - unique UID & GID are given to user
+ - An entry in /etc/passwd
+
+useradd <option> <username>
+Options are:
+   -u user id
+   -G Secondary group id
+   -g primary group id
+   -d home directory
+   -c comment
+   -s shell
+
+useradd angel
+
+usermod -G <nombredelgrupo> <nombredelusuario>
+usermod -G group angel
+
+id angel
+
+//during docker setup we should add user to a docker group
+
+passwd angel
+
+nano /etc/ssh/sshd_config                 //PasswordAuthentication  change to yes
+
+ #PermitEmptyPasswords no
+  PasswordAuthentication yes
+
+service sshd reload
+
+//login ssh with user angel
+
+--------------------
+--------------------
+File Permissions
+ -Owner or User level
+ -Groups level
+ -Others level
+
+          Files                              Directory
+-r: Read Only                           'ls' the content of dir
+-w: Write/Edit/Append/Delete            Add/Del/Rename contents of dir
+-x: Execute/Run                         To enter into dir using 'cd'
+
+ls -l
+unix/linux have 8 attributes that can be seen with ls -l command
+-rw-r--r--  1   root  root  8  May 7 20:29   file1
+
+
+-||rwx||rw-||r--||
+
+-
+File Type
+-  Normal File
+b  Block file(Harddisk, Floppy disk)
+c  Character file(Keyboard, Mouse)
+d  Directory
+l  link files(short cut)
+
+||rwx||
+talks about the root permissions (owner permission)
+
+||rw-||
+talks about the group permissions (primary group permissions)
+
+||r--
+(other permissions)
+
+---
+1 - file link
+root - owner primary group
+root - owner's primary group
+122 - size
+May 7 20:29 - sate
+file1 - filename
+
+---------
+CHMOD
+
+*Symbolic method(ugo)
+#chmod [who] [+/-/=] [permissions] file
+Who: To whom the permissions to be assigned
+Permissions: User/owner(u); group(g); others(o)
+
+Example:
+    chmod u=twx,g=rw,0=r <file_name>
+    chmod ugo=rwx <file_name>
+
+*Absolute method(numbers)
+We use numbers instead of using symbols
+  Read - 4
+  Write - 2
+  Execute - 1
+chmod 764 <file_name>
+chmod 777 <file_name>
+-----
+chown   angel:angel  file2
+//chown <user>:<group>  file2
+-------
+
+chmod u+x file1    //permisos de execution para el user
+
+chmod u+x,g-w,o=r file1  //remove permission of write and o equal is for override to read
+
+
+------
+
+Gather: recolectar
+Gather System Information
+
+history    :list all commands executed by a user
+ll
+ls -a
+ .bash_history
+
+free        :free memory of a server
+
+/proc/meminfo
+/proc/cpuinfo
+
+uname -a
+cat /etc/redhat-release
+
+du
+du -m
+du -m /etc
+
+man <command>
+man du
+
+----
+du -k /var    //consume in kbyte
+du -k /var | sort -rn head
+https://javarevisited.blogspot.com/2018/12/how-to-find-biggest-files-directories-in-linux-find-du-sort-head-commands-example.html
+
+whereis ls
+which ls
+
+df
+df -m
+
+=================
+Software Management
+=================
+yum is the primary tool for getting, installing, deleting, querying, and managing RedHat Enterprise Linux RPM
+software package from official RedHat software repositories, as well as other third-party repositories.
+
+yum install <package name>
+yum remove <package name>
+yum update <package name>
+yum info <package name>
+yum list available
+yum list installed
+
+BBVAMO
+
+----------
+yum install unzip 
+yum install telnet
+yum install wget -y
+yum install unzip telnet wget tree -y
+
+yum remove wget
+
+yum update wget
+yum info tree
+yum list installed
+
+installed - check in local system
+yum list installed | grep tree
+yum list installed | grep wget  //info si esta instalado wget
+
+available - check ins repository
+yum list available | grep tree
+
+
+=================
+Networking
+=================
+
+hostname     -list home name of the server
+ip-172-31-91-170.ec2.internal
+
+cat /etc/hostname
+
+hostname linux-server   //change temporally hostname to name linux-server
+init 6  //restart server
+
+
+ping         -availability of destination server over the network
+ping google.com
+
+wget         -download packages/softwares onto linux systems
+wget https://downloads.apache.org/tomcat/tomcat-10/v10.0.4/bin/apache-tomcat-10.0.4.tar.gz
+
+ifconfig     -list IP address of the server
+
+
+ip addr
+ifconfig -a
+
+
+curl         -access the application as from browser
+curl google.com
+
+
+Port Number  | Service
+21           |   FTP
+22           |   SSH
+23           |  TELNET
+25           |   SMTP
+53           |   DNS
+80           |   HTTP
+443          |   HTTPS
+
+
+netstat -tulpn      -check port are used 
+
+
+
+telnet    -is useful to check out whether the particular port is working or not
+telnet localhost 80
+telnet localhost 22
+
+
+=================
+Services
+=================
+is the process
+service - This controls that starting and stopping of services
+chkconfig - This controls which services are set to start on boot
+
+#service <name of the service> status --To check the status of the service
+#service <name of the service> start 
+#service <name of the service> stop
+#service <name of the service> reload
+#service <name of the service> restart
+
+#chkconfig --list        --To check the availability of service
+#chkconfig <service> on  --To make the service available after restart
+#chkconfig <service> on  --To make the service unavailable after restart
+
+yum install httpd
+
+yum install httpd
+
+service httpd status
+service httpd start
+service httpd status 
+
+which port?
+netstat -tulpn
+
+--
+ssh
+The SSH protocol (also referred to as Secure Shell) is a method for secure remote login from one computer to another.
+It provides severeal alternative options for strong authentication, and it protects the communications security and integrity
+with strong excryption.
+
+Port Number: 22
+Daemon:     sshd
+Conf file: /etc/ssh/sshd_config
+
+http
+Port Number: 80
+Daemon:  httpd
+Conf file:  /etc/httpd/conf/httpd.conf
+
+cd /var/www/html
+vi index.html
+  <h1>Hello, Welcome to Linux classes</h1>
+
+service httpd restart
+service httpd reload
+service httpd stop
+service httpd start
+
+test in browser
+<ip-public>:80
+
+init 6      //restart the server
+service httpd status
+service httpd start
+
+chkconfig httpd on
+reboot
+
+
+service httpd status
+
+systemctl status httpd
+systemctl stop httpd
+systemctl status httpd
+
+====================
+Process Management
+====================
+- When you start a program or running an application in Linux, it actually run as a process
+- A Linux process (a daemon), running in foreground or in the background, uses memory
+  and CPU resources.
+
+Command        |   Description
+ps -ef             list the process which are running in the system
+kill / kill -9     kill a process or service
+fg                 run the program in the foreground
+bg                 tun the service in the back group
+top                List top 20 process which 
+
+
+ps -ef
+ps -ef | grep http
+ps -ef | grep ssh
+
+
+kill 13376
+     <PID>     
+
+kill -9 2931
+
+sleep 10 &
+sleep 500
+(ctl+z)
+
+jobs
+[2]-  Stopped                 sleep 500
+[3]+  Stopped                 sleep 500
+
+bg %2
+jobs
+[2]-  Running                 sleep 500 &
+[3]+  Stopped                 sleep 500
+
+fg %3
+
+
+top
+
+
+=================
+Archiving files or directories
+=================
+Command             |     Description
+gzip                      Create a compressed file
+gunzip                    Unzip a file
+tar                       extract tar file
+
+
+yum install gzip -y 
+gzip file1 
+ll
+gunzip file1
+ll
+
+gunzip apache-tomcat-10.0.4.tar.gz 
+
+yum install zip
+unzip file1.zip
+
+//create verbose file
+tar -cvf dir1.tar dir1   //comprimir
+
+rm -rf dir1
+tar -xvf dir1.tar   //extraer
+
+gzip dir1.tar
+
+
+tar -xvzf apache-tomcat-10.0.4.tar.gz     //z -gzip
+
+gunzip apache-tomcat-10.0.4.tar.gz 
+tar -xvf apache-tomcat-10.0.4.tar
+
+=================
+Crontab
+=================
+In any operating system, it is possible to create jobs that you want to reoccur. This process
+know as "job scheduling", is usually done based on user-defined jobs. For RedHat or any
+other Linux, this process is handled by the cron service or a daemon called "crond", which can 
+be used to schedule tasks
+
+Commands: 
+crontab -l
+crontab -e
+
+Field   | Description        | Allowed Value
+MIN       Minute field          0 to 59
+HOUR      Hour field            0 to 23
+DOM       Day of the month      1-31
+MON       Month field           1-12
+DOW       Days of the week      0-6
+CMD                             any command
+
+Examples:
+Execute a job at 8:30 on everyday morning
+30 8 * * * Command
+
+2:30 PM on every Saturday
+00 14 * * 6 Command
+
+12:00 AM on 1st July
+00 00 01 06 * Command
+
+3:30PM on Every month 25th
+30 15 25 * * Command
+
+
+sudo -i
+crontab -e           -e edit
+
+30 8 * * * echo "1" >> /tmp/file1      //add value every day 8:30am
+00 14 * * 06 echo "2" >> /tmp/file2
+00 00 01 06 * echo "3" >> /tmp/file3
+30 15 25 * * echo "4" >> /tmp/file4
+17 03 * * * echo "5" >> /tmp/file5
+* * * * * echo "6" >> /tmp/file6      // every minute
+
+
+crontab -l
+
+
+=================
+Link Files
+=================
+There are 2 types of link files
+Soft link and Hard link
+
+Soft link                         			    |   Hard link
+SHORTCUT FILE                     			    |	BACKUP FILE
+Size of link file is equal to no. of characters                  Size of both is same
+in the name of original file
+-----
+If original file is deleted, link is broken                     If original file is deleted then also link will contain data
+and data is lost    
+
+Command: ln -s <src_file>  <dest_file>                           Command: ln <src_file> <dest_file>
+
+
+ln  -s file1 file11
+ll
+rm file1
+ll
+
+
+vi hello.sh
+  echo "hello world !!"
+
+chmod 755 hello.sh
+./hello.sh
+
+
+which ls
+which hello.sh
+
+ln -s /root/hello.sh /usr/local/bin/hello
+
+hello
+which hello
+
+-------------------------------
+=================
+Copy File between servers
+=================
+Windows to Linux
+     Mobaxterm or winscp
+copy with UI
+
+Linux to Linux
+SCP (secure copy) is a command-line utility that allows you to securely copy files and directories
+between two systems.
+
+   scp source_file_name username@destination_host:destination_folder
+
+   Example: scp file1 root@10.20.30.40:/tmp
+            scp root@10.20.30.40:/tmp  /home/ec2-user/
+
+
+Create other ec2 instance - redhat os
+
+//create user
+useradd test
+passwd test
+
+cd /home/test
+ls
+vi /etc/ssh/sshd_config
+
+  # To disable tunneled clear text passwords, change to no here!
+  PasswordAuthentication yes
+  #PermitEmptyPasswords no
+
+service sshd reload
+
+scp test@172.31.9.91:/home/test/file1 /home/ec2-user
+
+//copy directories   //src- is a directory
+scp -r src test@72.31.9.91:/home/test/
