@@ -9,7 +9,7 @@ Red Hat Enterprise Linux 8 (HVM), SSD Volume Type
 
 
 
-```sh
+```console
 [ec2-user@ip-172-31-26-217 ~]$ whoami
 ec2-user
 ```
@@ -21,7 +21,7 @@ root
 logout
 ```
 
-```sh
+```console
 [ec2-user@ip-172-31-26-217 ~]$ ls
 [ec2-user@ip-172-31-26-217 ~]$ date
 Sat Jun 26 17:26:39 UTC 2021
@@ -40,7 +40,7 @@ Changing password for user ec2-user.
 ```
 Viewing the Contents of Files
 
-```sh
+```console
 [ec2-user@ip-172-31-26-217 ~]$ cat /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/bin:/sbin/nologin
@@ -84,7 +84,7 @@ ec2-user:x:1000:1000:Cloud User:/home/ec2-user:/bin/bash
 
 ```
 Continuing a Long Command on Another Line
-```sh
+```console
 [ec2-user@ip-172-31-26-217 ~]$ head -n 3 \
 > /home/ec2-user/file1 \
 > /home/ec2-user/file2
