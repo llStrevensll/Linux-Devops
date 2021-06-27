@@ -4,5 +4,27 @@ In this case the practice is with ec2 instance in aws
 RHEL-8.4.0_HVM-20210504-x86_64-2-Hourly2-GP2
 
 
+[user@host]$ whoami
+user
+[user@host]$ 
+
+----
+
+[user@host ~]$ date
+Sat Jan  26 08:13:50 IST 2019
+[user@host ~]$ date +%R
+08:13
+[user@host ~]$ date +%x
+01/26/2019
+
+----
+[user@host ~]$ passwd
+Changing password for user user.
+Current password: old_password
+New password: new_password
+Retype new password: new_password
+passwd: all authentication tokens updated successfully.
+
+----
 
 

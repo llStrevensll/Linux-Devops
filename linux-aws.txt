@@ -39,7 +39,7 @@ Directory Name:
 /home  -it is home directory for other users
        -it provide working environment for other users (other than it provide working evironment for other users[other that root])
 
-/usr   -by default sofwares are installed in /usr directory
+/usr   -by default softwares are installed in /usr directory
        -(UNIX Sharable Resources)
 
 /bin   -it contains commands used by all users
