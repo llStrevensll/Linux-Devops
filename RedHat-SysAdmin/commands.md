@@ -389,3 +389,129 @@ total 4
 -rw-r--r--. 1 ec2-user ec2-user 30 Jun 27 03:42 hostname
 [ec2-user@ip-172-31-26-217 Documents]$
 ```
+
+
+```console
+[ec2-user@ip-172-31-17-137 ~]$ mkdir Music Pictures Videos
+[ec2-user@ip-172-31-17-137 ~]$ ls
+Music  Pictures  Videos
+[ec2-user@ip-172-31-17-137 ~]$  touch song1.mp3 song2.mp3 song3.mp3 song4.mp3 \
+> song5.mp3 song6.mp3
+[ec2-user@ip-172-31-17-137 ~]$ ls
+Music  Pictures  Videos  song1.mp3  song2.mp3  song3.mp3  song4.mp3  song5.mp3  song6.mp3
+[ec2-user@ip-172-31-17-137 ~]$ touch snap1.jpg snap2.jpg snap3.jpg snap4.jpg \
+> snap5.jpg snap6.jpg
+[ec2-user@ip-172-31-17-137 ~]$ touch film1.avi film2.avi film3.avi film4.avi \
+> film5.avi film6.avi
+[ec2-user@ip-172-31-17-137 ~]$ ls
+Music     Videos     film2.avi  film4.avi  film6.avi  snap2.jpg  snap4.jpg  snap6.jpg  song2.mp3  song4.mp3  song6.mp3
+Pictures  film1.avi  film3.avi  film5.avi  snap1.jpg  snap3.jpg  snap5.jpg  song1.mp3  song3.mp3  song5.mp3
+[ec2-user@ip-172-31-17-137 ~]$ ls -l
+total 0
+drwxrwxr-x. 2 ec2-user ec2-user 6 Jul  2 00:07 Music
+drwxrwxr-x. 2 ec2-user ec2-user 6 Jul  2 00:07 Pictures
+drwxrwxr-x. 2 ec2-user ec2-user 6 Jul  2 00:07 Videos
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:08 film1.avi
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:08 film2.avi
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:08 film3.avi
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:08 film4.avi
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:08 film5.avi
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:08 film6.avi
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 snap1.jpg
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 snap2.jpg
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 snap3.jpg
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 snap4.jpg
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 snap5.jpg
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 snap6.jpg
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 song1.mp3
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 song2.mp3
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 song3.mp3
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 song4.mp3
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 song5.mp3
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 song6.mp3
+```
+
+```console
+[ec2-user@ip-172-31-17-137 ~]$ mv song1.mp3 song2.mp3 song3.mp3 song4.mp3 \
+> song5.mp3 song6.mp3 Music
+[ec2-user@ip-172-31-17-137 ~]$ mv snap1.jpg snap2.jpg snap3.jpg snap4.jpg \
+> snap5.jpg snap6.jpg Pictures
+[ec2-user@ip-172-31-17-137 ~]$ mv film1.avi film2.avi film3.avi film4.avi \
+> film5.avi film6.avi Videos
+[ec2-user@ip-172-31-17-137 ~]$ ls -l Music Pictures Videos
+Music:
+total 0
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 song1.mp3
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 song2.mp3
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 song3.mp3
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 song4.mp3
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 song5.mp3
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 song6.mp3
+
+Pictures:
+total 0
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 snap1.jpg
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 snap2.jpg
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 snap3.jpg
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 snap4.jpg
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 snap5.jpg
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:07 snap6.jpg
+
+Videos:
+total 0
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:08 film1.avi
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:08 film2.avi
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:08 film3.avi
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:08 film4.avi
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:08 film5.avi
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:08 film6.avi
+[ec2-user@ip-172-31-17-137 ~]$ mkdir friends family work
+[ec2-user@ip-172-31-17-137 ~]$ ls -l
+total 0
+drwxrwxr-x. 2 ec2-user ec2-user 108 Jul  2 00:13 Music
+drwxrwxr-x. 2 ec2-user ec2-user 108 Jul  2 00:13 Pictures
+drwxrwxr-x. 2 ec2-user ec2-user 108 Jul  2 00:13 Videos
+drwxrwxr-x. 2 ec2-user ec2-user   6 Jul  2 00:15 family
+drwxrwxr-x. 2 ec2-user ec2-user   6 Jul  2 00:15 friends
+drwxrwxr-x. 2 ec2-user ec2-user   6 Jul  2 00:15 work
+```
+
+```console
+[ec2-user@ip-172-31-17-137 ~]$ cd friends/
+[ec2-user@ip-172-31-17-137 friends]$ cp ~/Music/song1.mp3 ~/Music/song2.mp3 \
+> ~/Pictures/snap1.jpg ~/Pictures/snap2.jpg ~/Videos/film1.avi \
+> ~/Videos/film2.avi .
+[ec2-user@ip-172-31-17-137 friends]$ cd ../family
+[ec2-user@ip-172-31-17-137 family]$ cp ~/Music/song3.mp3 ~/Music/song4.mp3 \
+> ~/Pictures/snap3.jpg ~/Pictures/snap4.jpg ~/Videos/film3.avi \
+> ~/Videos/film4.avi .
+[ec2-user@ip-172-31-17-137 family]$ cd ../work/
+[ec2-user@ip-172-31-17-137 work]$ cp ~/Music/song5.mp3 ~/Music/song6.mp3 \
+> ~/Pictures/snap5.jpg ~/Pictures/snap6.jpg \
+> ~/Videos/film5.avi ~/Videos/film6.avi .
+[ec2-user@ip-172-31-17-137 work]$ ls -l
+total 0
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:22 film5.avi
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:22 film6.avi
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:22 snap5.jpg
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:22 snap6.jpg
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:22 song5.mp3
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 00:22 song6.mp3
+ls -l Music/ Pictures/ Videos/
+
+
+[ec2-user@ip-172-31-17-137 ~]$ rm -r family friends
+[ec2-user@ip-172-31-17-137 ~]$ cd work
+[ec2-user@ip-172-31-17-137 work]$ rm song5.mp3 song6.mp3 snap5.jpg snap6.jpg \
+> film5.avi film6.avi
+[ec2-user@ip-172-31-17-137 work]$ ls -l
+total 0
+[ec2-user@ip-172-31-17-137 work]$ cd
+[ec2-user@ip-172-31-17-137 ~]$ rmdir work
+[ec2-user@ip-172-31-17-137 ~]$ ls -l
+total 0
+drwxrwxr-x. 2 ec2-user ec2-user 108 Jul  2 00:13 Music
+drwxrwxr-x. 2 ec2-user ec2-user 108 Jul  2 00:13 Pictures
+drwxrwxr-x. 2 ec2-user ec2-user 108 Jul  2 00:13 Videos
+
+```
