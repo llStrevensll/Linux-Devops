@@ -872,3 +872,121 @@ total 0
 -rw-rw-r--. 2 ec2-user ec2-user 0 Jul  2 12:21 season2_project_plan.odf
 [ec2-user@ip-172-31-20-80 ~]$
 ```
+
+##Chapter 4. Getting Help in Red Hat Enterprise Linux
+
+```console
+[ec2-user@ip-172-31-20-80 ~]$ man 1 su
+[ec2-user@ip-172-31-20-80 ~]$ man man
+[ec2-user@ip-172-31-20-80 ~]$ whereis man
+man: /usr/bin/man /usr/share/man /usr/share/man/man1/man.1.gz
+
+[student@workstation ~]$ man -k zip
+...output omitted...
+zipinfo (1)          - list detailed information about a ZIP archive
+zipnote (1)          - write the comments in zipfile to stdout, edit comments and rename files in zipfile
+zipsplit (1)         - split a zipfile into smaller zipfiles
+
+[student@workstation ~]$ man -k boot
+...output omitted...
+bootctl (1)          - Control the firmware and boot manager settings
+bootparam (7)        - introduction to boot time parameters of the Linux kernel
+bootup (7)           - System bootup process
+...output omitted...
+
+[student@workstation ~]$ man -k ext4
+...output omitted...
+resize2fs (8)        - ext2/ext3/ext4 file system resizer
+tune2fs (8)          - adjust tunable filesystem parameters on ext2/ext3/ext4 filesystems
+
+[ec2-user@ip-172-31-20-80 ~]$ man tar
+[ec2-user@ip-172-31-20-80 ~]$ pinfo tar
+
+[ec2-user@ip-172-31-20-80 ~]$ man -t passwd > passwd.ps
+[ec2-user@ip-172-31-20-80 ~]$ ls -al
+total 32
+drwx------. 3 ec2-user ec2-user    91 Jul  2 13:22 .
+drwxr-xr-x. 3 root     root        22 Jul  2 11:15 ..
+-rw-r--r--. 1 ec2-user ec2-user    18 Apr 21 14:04 .bash_logout
+-rw-r--r--. 1 ec2-user ec2-user   141 Apr 21 14:04 .bash_profile
+-rw-r--r--. 1 ec2-user ec2-user   376 Apr 21 14:04 .bashrc
+drwx------. 2 ec2-user ec2-user    29 Jul  2 11:15 .ssh
+-rw-rw-r--. 1 ec2-user ec2-user 20142 Jul  2 13:22 passwd.ps
+[ec2-user@ip-172-31-20-80 ~]$ file passwd.ps
+passwd.ps: PostScript document text conforming DSC level 3.0
+[ec2-user@ip-172-31-20-80 ~]$ less passwd.ps
+
+```
+
+##Chapter 5. Creating, Viewing, and Editing Text Files
+
+```console
+[ec2-user@ip-172-31-20-80 ~]$ date > /tmp/saved-timestamp
+[ec2-user@ip-172-31-20-80 ~]$ cat /tmp/saved-timestamp
+Fri Jul  2 15:51:54 UTC 2021
+
+
+
+[user@host ~]$ tail -n 100 /var/log/dmesg > /tmp/last-100-boot-messages
+[user@host ~]$ cat file1 file2 file3 file4 > /tmp/all-four-in-one
+[user@host ~]$ ls -a > /tmp/my-file-names
+[user@host ~]$ echo "new line of information" >> /tmp/many-lines-of-information
+[user@host ~]$ diff previous-file current-file >> /tmp/tracking-changes-made
+
+
+[user@host ~]$ find /etc -name passwd 2> /tmp/errors
+[user@host ~]$ find /etc -name passwd > /tmp/output 2> /tmp/errors
+[user@host ~]$ find /etc -name passwd > /tmp/output 2> /dev/null
+[user@host ~]$ find /etc -name passwd &> /tmp/save-both
+[user@host ~]$ find /etc -name passwd >> /tmp/save-both 2>&1
+
+[ec2-user@ip-172-31-20-80 ~]$ ls -l /usr/bin | less
+
+[ec2-user@ip-172-31-20-80 ~]$ touch filee
+[ec2-user@ip-172-31-20-80 ~]$ ls | wc -l
+1
+[ec2-user@ip-172-31-20-80 ~]$
+
+[ec2-user@ip-172-31-20-80 ~]$ ls -t | head -n 10 > /tmp/ten-last-changed-files
+[ec2-user@ip-172-31-20-80 ~]$ cat /tmp/ten-last-changed-files
+filee
+
+[ec2-user@ip-172-31-20-80 ~]$ ls -l | tee /tmp/saved-output | less
+[ec2-user@ip-172-31-20-80 ~]$ ls -t | head -n 10 | tee /tmp/ten-last-changed-files
+filee
+
+
+
+[ec2-user@ip-172-31-20-80 ~]$ set | less
+[ec2-user@ip-172-31-20-80 ~]$ COUNT=40
+[ec2-user@ip-172-31-20-80 ~]$ echo $COUNT
+40
+
+[ec2-user@ip-172-31-20-80 ~]$ file1=/tmp/tmp.z9pXW0HqcC
+[ec2-user@ip-172-31-20-80 ~]$ ls -l $file1
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 16:41 /tmp/tmp.z9pXW0HqcC
+```
+
+```console
+[ec2-user@ip-172-31-20-80 ~]$ PS1="bash\$ "
+bash$
+bash$ PS1="[\u@\h \W]\$ "
+[ec2-user@ip-172-31-20-80 ~]$
+[ec2-user@ip-172-31-20-80 ~]$
+```
+
+```console
+[ec2-user@ip-172-31-20-80 ~]$ echo $PATH
+/home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin
+[ec2-user@ip-172-31-20-80 ~]$ export PATH=${PATH}:/home/user/sbin
+[ec2-user@ip-172-31-20-80 ~]$ echo $PATH
+/home/ec2-user/.local/bin:/home/ec2-user/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/user/sbin
+[ec2-user@ip-172-31-20-80 ~]$
+[ec2-user@ip-172-31-20-80 ~]$ env
+
+[ec2-user@ip-172-31-20-80 ~]$ echo $file1
+/tmp/tmp.z9pXW0HqcC
+[ec2-user@ip-172-31-20-80 ~]$ unset file1
+[ec2-user@ip-172-31-20-80 ~]$ echo $file1
+
+```
