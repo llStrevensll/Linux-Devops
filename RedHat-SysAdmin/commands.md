@@ -599,3 +599,276 @@ cat: /tmp/file2-symlink.txt: No such file or directory
 [ec2-user@ip-172-31-17-137 configfiles]$ ls
 etc
 ```
+
+```console
+[ec2-user@ip-172-31-20-80 ~]$ mkdir glob; cd glob
+[ec2-user@ip-172-31-20-80 glob]$ touch alfa bravo charlie delta echo able baker cast dog easy
+[ec2-user@ip-172-31-20-80 glob]$ ls
+able  alfa  baker  bravo  cast  charlie  delta  dog  easy  echo
+[ec2-user@ip-172-31-20-80 glob]$ ls a*
+able  alfa
+[ec2-user@ip-172-31-20-80 glob]$ ls *a*
+able  alfa  baker  bravo  cast  charlie  delta  easy
+[ec2-user@ip-172-31-20-80 glob]$ ls [ac]*
+able  alfa  cast  charlie
+[ec2-user@ip-172-31-20-80 glob]$ ls ????
+able  alfa  cast  easy  echo
+[ec2-user@ip-172-31-20-80 glob]$ ls ?????
+baker  bravo  delta
+[ec2-user@ip-172-31-20-80 glob]$
+
+
+[ec2-user@ip-172-31-20-80 glob]$ echo ~root
+/root
+[ec2-user@ip-172-31-20-80 glob]$ echo ~user
+~user
+[ec2-user@ip-172-31-20-80 glob]$ echo ~ec2-user
+/home/ec2-user
+[ec2-user@ip-172-31-20-80 glob]$ echo ~/glob
+/home/ec2-user/glob
+[ec2-user@ip-172-31-20-80 glob]$
+
+
+[ec2-user@ip-172-31-20-80 glob]$ echo {Sunday,Monday,Tuesday,Wenesday}.log
+Sunday.log Monday.log Tuesday.log Wenesday.log
+[ec2-user@ip-172-31-20-80 glob]$ echo file{1..3}.txt
+file1.txt file2.txt file3.txt
+[ec2-user@ip-172-31-20-80 glob]$ echo file{a.c}.txt
+file{a.c}.txt
+[ec2-user@ip-172-31-20-80 glob]$ echo file{a..c}.txt
+filea.txt fileb.txt filec.txt
+[ec2-user@ip-172-31-20-80 glob]$ echo file{a,b}{1,2}.txt
+filea1.txt filea2.txt fileb1.txt fileb2.txt
+[ec2-user@ip-172-31-20-80 glob]$ echo file{a{1,2},b,c}.txt
+filea1.txt filea2.txt fileb.txt filec.txt
+
+[ec2-user@ip-172-31-20-80 glob]$ mkdir ../RHEL{6,7,8}
+[ec2-user@ip-172-31-20-80 glob]$ ls ../RHEL*
+../RHEL6:
+
+../RHEL7:
+
+../RHEL8:
+
+[ec2-user@ip-172-31-20-80 glob]$ USERNAME=operator
+[ec2-user@ip-172-31-20-80 glob]$ echo ${USERNAME}
+operator
+[ec2-user@ip-172-31-20-80 glob]$
+[ec2-user@ip-172-31-20-80 glob]$ echo $USERNAME
+operator
+
+
+[ec2-user@ip-172-31-20-80 glob]$ echo Today is $(date +%A).
+Today is Friday.
+[ec2-user@ip-172-31-20-80 glob]$ echo Today is $(date).
+Today is Fri Jul 2 11:39:46 UTC 2021.
+[ec2-user@ip-172-31-20-80 glob]$
+[ec2-user@ip-172-31-20-80 glob]$ echo The time is $(data +%M) minutes past $(date +%1%p).
+-bash: data: command not found
+The time is minutes past %p.
+[ec2-user@ip-172-31-20-80 glob]$ echo The time is $(date +%M) minutes past $(date +%1%p).
+The time is 40 minutes past %p.
+// With character l, not number 1
+[ec2-user@ip-172-31-20-80 glob]$ echo The time is $(date +%M) minutes past $(date +%l%p).
+The time is 41 minutes past 11AM.
+[ec2-user@ip-172-31-20-80 glob]$
+
+
+[ec2-user@ip-172-31-20-80 glob]$ echo The value of $HOME is your home directory.
+The value of /home/ec2-user is your home directory.
+[ec2-user@ip-172-31-20-80 glob]$ echo The value of \$HOME is your home directory.
+The value of $HOME is your home directory.
+
+[ec2-user@ip-172-31-20-80 glob]$ myhost=$(hostname -s); echo $myhost
+ip-172-31-20-80
+[ec2-user@ip-172-31-20-80 glob]$ echo "***** hostname is ${myhost} *****"
+***** hostname is ip-172-31-20-80 *****
+[ec2-user@ip-172-31-20-80 glob]$
+
+[ec2-user@ip-172-31-20-80 glob]$ echo "Will variable $myhost evaluate to $(hostname -s)?"
+Will variable ip-172-31-20-80 evaluate to ip-172-31-20-80?
+[ec2-user@ip-172-31-20-80 glob]$ echo 'Will variable $myhost evaluate to $(hostname -s)?'
+Will variable $myhost evaluate to $(hostname -s)?
+[ec2-user@ip-172-31-20-80 glob]$
+```
+
+```console
+[ec2-user@ip-172-31-20-80 ~]$ mkdir -p ~/Documents/project_plans
+[ec2-user@ip-172-31-20-80 ~]$ touch \
+> ~/Documents/project_plans/{season1,season2}_project_plan.odf
+[ec2-user@ip-172-31-20-80 ~]$ ls -lR Documents/
+Documents/:
+total 0
+drwxrwxr-x. 2 ec2-user ec2-user 70 Jul  2 12:21 project_plans
+
+Documents/project_plans:
+total 0
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 12:21 season1_project_plan.odf
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 12:21 season2_project_plan.odf
+[ec2-user@ip-172-31-20-80 ~]$
+[ec2-user@ip-172-31-20-80 ~]$
+[ec2-user@ip-172-31-20-80 ~]$ touch tv_season{1..2}_episode{1..6}.ogg
+[ec2-user@ip-172-31-20-80 ~]$ ls tv*
+tv_season1_episode1.ogg  tv_season1_episode5.ogg  tv_season2_episode3.ogg
+tv_season1_episode2.ogg  tv_season1_episode6.ogg  tv_season2_episode4.ogg
+tv_season1_episode3.ogg  tv_season2_episode1.ogg  tv_season2_episode5.ogg
+tv_season1_episode4.ogg  tv_season2_episode2.ogg  tv_season2_episode6.ogg
+[ec2-user@ip-172-31-20-80 ~]$
+[ec2-user@ip-172-31-20-80 ~]$
+[ec2-user@ip-172-31-20-80 ~]$ touch mystery_chapter{1..8}.odf
+[ec2-user@ip-172-31-20-80 ~]$ ls mys*
+mystery_chapter1.odf  mystery_chapter3.odf  mystery_chapter5.odf  mystery_chapter7.odf
+mystery_chapter2.odf  mystery_chapter4.odf  mystery_chapter6.odf  mystery_chapter8.odf
+[ec2-user@ip-172-31-20-80 ~]$
+[ec2-user@ip-172-31-20-80 ~]$ mkdir -p Videos/season{1..2}
+[ec2-user@ip-172-31-20-80 ~]$ ls Videos
+season1  season2
+[ec2-user@ip-172-31-20-80 ~]$
+[ec2-user@ip-172-31-20-80 ~]$
+[ec2-user@ip-172-31-20-80 ~]$ mv tv_season1* Videos/season1
+[ec2-user@ip-172-31-20-80 ~]$ mv tv_season2* Videos/season2
+[ec2-user@ip-172-31-20-80 ~]$ ls -R Videos
+Videos:
+season1  season2
+
+Videos/season1:
+tv_season1_episode1.ogg  tv_season1_episode3.ogg  tv_season1_episode5.ogg
+tv_season1_episode2.ogg  tv_season1_episode4.ogg  tv_season1_episode6.ogg
+
+Videos/season2:
+tv_season2_episode1.ogg  tv_season2_episode3.ogg  tv_season2_episode5.ogg
+tv_season2_episode2.ogg  tv_season2_episode4.ogg  tv_season2_episode6.ogg
+[ec2-user@ip-172-31-20-80 ~]$
+[ec2-user@ip-172-31-20-80 ~]$
+[ec2-user@ip-172-31-20-80 ~]$ mkdir -p Documents/my_bestseller/chapters
+[ec2-user@ip-172-31-20-80 ~]$ ls -R Documents
+Documents:
+my_bestseller  project_plans
+
+Documents/my_bestseller:
+chapters
+
+Documents/my_bestseller/chapters:
+
+Documents/project_plans:
+season1_project_plan.odf  season2_project_plan.odf
+[ec2-user@ip-172-31-20-80 ~]$ mkdir Documents/my_bestseller/{editor,changes,vacation}
+[ec2-user@ip-172-31-20-80 ~]$ ls -R Documents
+Documents:
+my_bestseller  project_plans
+
+Documents/my_bestseller:
+changes  chapters  editor  vacation
+
+Documents/my_bestseller/changes:
+
+Documents/my_bestseller/chapters:
+
+Documents/my_bestseller/editor:
+
+Documents/my_bestseller/vacation:
+
+Documents/project_plans:
+season1_project_plan.odf  season2_project_plan.odf
+[ec2-user@ip-172-31-20-80 ~]$
+[ec2-user@ip-172-31-20-80 ~]$
+[ec2-user@ip-172-31-20-80 ~]$ cd Documents/my_bestseller/chapters
+[ec2-user@ip-172-31-20-80 chapters]$ mv ~/mystery_chapter* .
+[ec2-user@ip-172-31-20-80 chapters]$ ls
+mystery_chapter1.odf  mystery_chapter3.odf  mystery_chapter5.odf  mystery_chapter7.odf
+mystery_chapter2.odf  mystery_chapter4.odf  mystery_chapter6.odf  mystery_chapter8.odf
+[ec2-user@ip-172-31-20-80 chapters]$
+[ec2-user@ip-172-31-20-80 chapters]$ mv mystery_chapter{1..2}.odf ../editor
+[ec2-user@ip-172-31-20-80 chapters]$ ls
+mystery_chapter3.odf  mystery_chapter5.odf  mystery_chapter7.odf
+mystery_chapter4.odf  mystery_chapter6.odf  mystery_chapter8.odf
+[ec2-user@ip-172-31-20-80 chapters]$ ls ../editor
+mystery_chapter1.odf  mystery_chapter2.odf
+[ec2-user@ip-172-31-20-80 chapters]$
+[ec2-user@ip-172-31-20-80 chapters]$
+[ec2-user@ip-172-31-20-80 chapters]$ mv mystery_chapter{7,8}.odf ../vacation
+[ec2-user@ip-172-31-20-80 chapters]$ ls
+mystery_chapter3.odf  mystery_chapter4.odf  mystery_chapter5.odf  mystery_chapter6.odf
+[ec2-user@ip-172-31-20-80 chapters]$ ls ../vacation
+mystery_chapter7.odf  mystery_chapter8.odf
+[ec2-user@ip-172-31-20-80 chapters]$ cd ~/Videos/season2
+[ec2-user@ip-172-31-20-80 season2]$ cp *episode1.ogg ~/Documents/my_bestseller/vacation
+[ec2-user@ip-172-31-20-80 season2]$
+[ec2-user@ip-172-31-20-80 season2]$ cd ~/Documents/my_bestseller/vacation
+[ec2-user@ip-172-31-20-80 vacation]$ ls
+mystery_chapter7.odf  mystery_chapter8.odf  tv_season2_episode1.ogg
+[ec2-user@ip-172-31-20-80 vacation]$ cd -
+/home/ec2-user/Videos/season2
+[ec2-user@ip-172-31-20-80 season2]$ cp *episode2.ogg ~/Documents/my_bestseller/vacation
+[ec2-user@ip-172-31-20-80 season2]$ cd -
+/home/ec2-user/Documents/my_bestseller/vacation
+[ec2-user@ip-172-31-20-80 vacation]$ ls
+mystery_chapter7.odf  mystery_chapter8.odf  tv_season2_episode1.ogg  tv_season2_episode2.ogg
+[ec2-user@ip-172-31-20-80 vacation]$
+[ec2-user@ip-172-31-20-80 vacation]$
+[ec2-user@ip-172-31-20-80 vacation]$ cd ~/Documents/my_bestseller
+[ec2-user@ip-172-31-20-80 my_bestseller]$ cp chapters/mystery_chapter[56].odf changes
+[ec2-user@ip-172-31-20-80 my_bestseller]$ ls chapters
+mystery_chapter3.odf  mystery_chapter4.odf  mystery_chapter5.odf  mystery_chapter6.odf
+[ec2-user@ip-172-31-20-80 my_bestseller]$ ls changes
+mystery_chapter5.odf  mystery_chapter6.odf
+[ec2-user@ip-172-31-20-80 my_bestseller]$
+[ec2-user@ip-172-31-20-80 my_bestseller]$
+[ec2-user@ip-172-31-20-80 my_bestseller]$ cd changes
+[ec2-user@ip-172-31-20-80 changes]$ cp mystery_chapter5.odf \
+> mystery_chapter5_$(date +%F).odf
+[ec2-user@ip-172-31-20-80 changes]$ cp mystery_chapter5.odf \
+> mystery_chapter5_$(date +%s).odf
+[ec2-user@ip-172-31-20-80 changes]$ ls
+mystery_chapter5.odf             mystery_chapter5_2021-07-02.odf
+mystery_chapter5_1625229312.odf  mystery_chapter6.odf
+[ec2-user@ip-172-31-20-80 changes]$ rm mystery*
+[ec2-user@ip-172-31-20-80 changes]$ cd ..
+[ec2-user@ip-172-31-20-80 my_bestseller]$ rm changes
+rm: cannot remove 'changes': Is a directory
+[ec2-user@ip-172-31-20-80 my_bestseller]$ rmdir changes
+[ec2-user@ip-172-31-20-80 my_bestseller]$ ls
+chapters  editor  vacation
+[ec2-user@ip-172-31-20-80 my_bestseller]$
+[ec2-user@ip-172-31-20-80 my_bestseller]$
+[ec2-user@ip-172-31-20-80 my_bestseller]$ rm -r vacation
+[ec2-user@ip-172-31-20-80 my_bestseller]$ ls
+chapters  editor
+[ec2-user@ip-172-31-20-80 my_bestseller]$ cd
+[ec2-user@ip-172-31-20-80 ~]$ mkdir ~/Documents/backups
+[ec2-user@ip-172-31-20-80 ~]$ ln ~/Documents/project_plans/season2_project_plan.odf \
+> ~/Documents/backups/season2_project_plan.odf.back
+[ec2-user@ip-172-31-20-80 ~]$ ls -lR ~/Documents/
+/home/ec2-user/Documents/:
+total 0
+drwxrwxr-x. 2 ec2-user ec2-user 43 Jul  2 12:41 backups
+drwxrwxr-x. 4 ec2-user ec2-user 36 Jul  2 12:40 my_bestseller
+drwxrwxr-x. 2 ec2-user ec2-user 70 Jul  2 12:21 project_plans
+
+/home/ec2-user/Documents/backups:
+total 0
+-rw-rw-r--. 2 ec2-user ec2-user 0 Jul  2 12:21 season2_project_plan.odf.back
+
+/home/ec2-user/Documents/my_bestseller:
+total 0
+drwxrwxr-x. 2 ec2-user ec2-user 118 Jul  2 12:28 chapters
+drwxrwxr-x. 2 ec2-user ec2-user  62 Jul  2 12:27 editor
+
+/home/ec2-user/Documents/my_bestseller/chapters:
+total 0
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 12:22 mystery_chapter3.odf
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 12:22 mystery_chapter4.odf
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 12:22 mystery_chapter5.odf
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 12:22 mystery_chapter6.odf
+
+/home/ec2-user/Documents/my_bestseller/editor:
+total 0
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 12:22 mystery_chapter1.odf
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 12:22 mystery_chapter2.odf
+
+/home/ec2-user/Documents/project_plans:
+total 0
+-rw-rw-r--. 1 ec2-user ec2-user 0 Jul  2 12:21 season1_project_plan.odf
+-rw-rw-r--. 2 ec2-user ec2-user 0 Jul  2 12:21 season2_project_plan.odf
+[ec2-user@ip-172-31-20-80 ~]$
+```
