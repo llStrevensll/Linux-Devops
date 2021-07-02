@@ -515,3 +515,87 @@ drwxrwxr-x. 2 ec2-user ec2-user 108 Jul  2 00:13 Pictures
 drwxrwxr-x. 2 ec2-user ec2-user 108 Jul  2 00:13 Videos
 
 ```
+
+You can use the ln command to create a new hard link (another name) that points to an existing file. The command needs at least two arguments, a path to the existing file, and the path to the hard link that you want to create.
+
+The following example creates a hard link named newfile-link2.txt for the existing file newfile.txt in the /tmp directory.
+
+If you want to find out whether two files are hard links of each other, one way is to use the -i option with the ls command to list the files' inode number. If the files are on the same file system (discussed in a moment) and their inode numbers are the same, the files are hard links pointing to the same data.
+
+```console
+[ec2-user@ip-172-31-17-137 ~]$ touch file1.txt
+[ec2-user@ip-172-31-17-137 ~]$ ls
+Music  Pictures  Videos  file1.txt
+[ec2-user@ip-172-31-17-137 ~]$ ln file1.txt /tmp/newfile-klink.txt
+[ec2-user@ip-172-31-17-137 ~]$ ls -l file1.txt /tmp/newfile-klink.txt
+-rw-rw-r--. 2 ec2-user ec2-user 0 Jul  2 01:03 /tmp/newfile-klink.txt
+-rw-rw-r--. 2 ec2-user ec2-user 0 Jul  2 01:03 file1.txt
+[ec2-user@ip-172-31-17-137 ~]$
+[ec2-user@ip-172-31-17-137 ~]$
+[ec2-user@ip-172-31-17-137 ~]$ ls -il file1.txt /tmp/newfile-klink.txt
+8412550 -rw-rw-r--. 2 ec2-user ec2-user 0 Jul  2 01:03 /tmp/newfile-klink.txt
+8412550 -rw-rw-r--. 2 ec2-user ec2-user 0 Jul  2 01:03 file1.txt
+```
+
+```console
+ec2-user@ip-172-31-17-137 ~]$ vi file1.txt
+[ec2-user@ip-172-31-17-137 ~]$
+[ec2-user@ip-172-31-17-137 ~]$ rm -f file1.txt
+[ec2-user@ip-172-31-17-137 ~]$ ls -l /tmp/newfile-klink.txt
+-rw-rw-r--. 1 ec2-user ec2-user 17 Jul  2 01:09 /tmp/newfile-klink.txt
+[ec2-user@ip-172-31-17-137 ~]$ cat /tmp/newfile-klink.txt
+Hi, How are you?
+[ec2-user@ip-172-31-17-137 ~]$
+
+
+
+[ec2-user@ip-172-31-17-137 ~]$ df
+Filesystem     1K-blocks    Used Available Use% Mounted on
+devtmpfs          385740       0    385740   0% /dev
+tmpfs             412872       0    412872   0% /dev/shm
+tmpfs             412872   10740    402132   3% /run
+tmpfs             412872       0    412872   0% /sys/fs/cgroup
+/dev/xvda2      10473452 1302428   9171024  13% /
+tmpfs              82572       0     82572   0% /run/user/1000
+[ec2-user@ip-172-31-17-137 ~]$
+```
+
+###Limitations of Hard Links
+
+Hard links have some limitations. Firstly, hard links can only be used with regular files. You cannot use ln to create a hard link to a directory or special file.
+
+Secondly, hard links can only be used if both files are on the same file system. The file-system hierarchy can be made up of multiple storage devices. Depending on the configuration of your system, when you change into a new directory, that directory and its contents may be stored on a different file system.
+
+Files in two different "Mounted on" directories and their subdirectories are on different file systems. (The most specific match wins.) So, the system in this example, you can create a hard link between /var/tmp/link1 and /home/user/file because they are both subdirectories of / but not any other directory on the list. But you cannot create a hard link between /boot/test/badlink and /home/user/file because the first file is in a subdirectory of /boot (on the "Mounted on" list) and the second file is not.
+
+
+```console
+[ec2-user@ip-172-31-17-137 ~]$ touch file2.txt
+[ec2-user@ip-172-31-17-137 ~]$ vi file2.txt
+[ec2-user@ip-172-31-17-137 ~]$
+[ec2-user@ip-172-31-17-137 ~]$ ln -s /home/ec2-user/file2.txt /tmp/file2-symlink.txt
+
+[ec2-user@ip-172-31-17-137 ~]$ ls -l file2.txt /tmp/file2-symlink.txt
+lrwxrwxrwx. 1 ec2-user ec2-user 24 Jul  2 01:17 /tmp/file2-symlink.txt -> /home/ec2-user/file2.txt
+-rw-rw-r--. 1 ec2-user ec2-user 27 Jul  2 01:16 file2.txt
+[ec2-user@ip-172-31-17-137 ~]$ cat /tmp/file2-symlink.txt
+Soft link!! with this file
+
+[ec2-user@ip-172-31-17-137 ~]$ ls -il file2.txt /tmp/file2-symlink.txt
+5401455 lrwxrwxrwx. 1 ec2-user ec2-user 24 Jul  2 01:17 /tmp/file2-symlink.txt -> /home/ec2-user/file2.txt
+8412560 -rw-rw-r--. 1 ec2-user ec2-user 27 Jul  2 01:16 file2.txt
+
+[ec2-user@ip-172-31-17-137 ~]$ rm -f file2.txt
+[ec2-user@ip-172-31-17-137 ~]$ ls -l /tmp/file2-symlink.txt
+lrwxrwxrwx. 1 ec2-user ec2-user 24 Jul  2 01:17 /tmp/file2-symlink.txt -> /home/ec2-user/file2.txt
+[ec2-user@ip-172-31-17-137 ~]$ cat /tmp/file2-symlink.txt
+cat: /tmp/file2-symlink.txt: No such file or directory
+
+
+[ec2-user@ip-172-31-17-137 ~]$ ln -s /etc /home/ec2-user/configfiles
+[ec2-user@ip-172-31-17-137 ~]$ cd /home/ec2-user/configfiles
+[ec2-user@ip-172-31-17-137 configfiles]$ pwd
+/home/ec2-user/configfiles
+[ec2-user@ip-172-31-17-137 configfiles]$ ls
+etc
+```
