@@ -873,7 +873,7 @@ total 0
 [ec2-user@ip-172-31-20-80 ~]$
 ```
 
-##Chapter 4. Getting Help in Red Hat Enterprise Linux
+## Chapter 4. Getting Help in Red Hat Enterprise Linux
 
 ```console
 [ec2-user@ip-172-31-20-80 ~]$ man 1 su
@@ -918,7 +918,7 @@ passwd.ps: PostScript document text conforming DSC level 3.0
 
 ```
 
-##Chapter 5. Creating, Viewing, and Editing Text Files
+## Chapter 5. Creating, Viewing, and Editing Text Files
 
 ```console
 [ec2-user@ip-172-31-20-80 ~]$ date > /tmp/saved-timestamp
@@ -989,4 +989,33 @@ bash$ PS1="[\u@\h \W]\$ "
 [ec2-user@ip-172-31-20-80 ~]$ unset file1
 [ec2-user@ip-172-31-20-80 ~]$ echo $file1
 
+```
+
+## Chapter 6. Managing Local Users and Groups
+```console
+[ec2-user@ip-172-31-26-63 ~]$ id
+uid=1000(ec2-user) gid=1000(ec2-user) groups=1000(ec2-user),4(adm),190(systemd-journal) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+
+[ec2-user@ip-172-31-26-63 ~]$ id user02
+uid=1001(user02) gid=1001(user02) groups=1001(user02)
+
+[user01@host ~]$ ls -l file1
+-rw-rw-r--. 1 user01 user01 0 Feb  5 11:10 file1
+[user01@host]$ ls -ld dir1
+drwxrwxr-x. 2 user01 user01 6 Feb  5 11:10 dir1
+
+[ec2-user@ip-172-31-26-63 ~]$ ps -au
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root        1095  0.0  0.1  13656  1596 tty1     Ss+  23:19   0:00 /sbin/agetty -o -p -- \u --noclear tty1 linux
+root        1096  0.0  0.2  16224  2112 ttyS0    Ss+  23:19   0:00 /sbin/agetty -o -p -- \u --keep-baud 115200,38400,960
+ec2-user    4683  0.0  0.5  31280  4408 pts/0    Ss   23:20   0:00 -bash
+ec2-user    4851  0.0  0.4  62988  3932 pts/0    R+   23:22   0:00 ps -au
+
+[ec2-user@ip-172-31-26-63 etc]$ cat passwd
+[ec2-user@ip-172-31-26-63 etc]$ cat group
+[ec2-user@ip-172-31-26-63 etc]$ sudo cat /etc/shadow
+
+[user02@host ~]$ sudo tail /var/log/secure
+
+[ec2-user@ip-172-31-26-63 ~]$ sudo -i
 ```
