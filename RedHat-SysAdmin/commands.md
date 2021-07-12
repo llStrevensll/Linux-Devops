@@ -1019,3 +1019,192 @@ ec2-user    4851  0.0  0.4  62988  3932 pts/0    R+   23:22   0:00 ps -au
 
 [ec2-user@ip-172-31-26-63 ~]$ sudo -i
 ```
+
+```console
+[student@servera ~]$ sudo su -
+[sudo] password for student: student
+[root@servera ~]# 
+
+[root@servera ~]# useradd operator1
+[root@servera ~]# tail /etc/passwd
+...output omitted...
+operator1:x:1002:1002::/home/operator1:/bin/bash
+
+[root@servera ~]# passwd operator1
+Changing password for user operator1.
+New password: redhat
+BAD PASSWORD: The password is shorter than 8 characters
+Retype new password: redhat
+passwd: all authentication tokens updated successfully.
+
+[root@servera ~]# passwd operator1
+Changing password for user operator1.
+New password: redhat
+BAD PASSWORD: The password is shorter than 8 characters
+Retype new password: redhat
+passwd: all authentication tokens updated successfully.
+
+[root@servera ~]# useradd operator3
+[root@servera ~]# passwd operator3
+Changing password for user operator3.
+New password: redhat
+BAD PASSWORD: The password is shorter than 8 characters
+Retype new password: redhat
+passwd: all authentication tokens updated successfully.
+[root@servera ~]# usermod -c "Operator One" operator1
+[root@servera ~]# usermod -c "Operator Two" operator2
+[root@servera ~]# tail /etc/passwd
+
+[root@servera ~]# userdel -r operator3
+[root@servera ~]# tail /etc/passwd
+...output omitted...
+operator1:x:1002:1002:Operator One:/home/operator1:/bin/bash
+operator2:x:1003:1003:Operator Two:/home/operator2:/bin/bash
+
+[root@servera ~]# exit
+logout
+[student@servera ~]$ 
+
+
+[ec2-user@ip-172-31-22-184 ~]$ sudo groupadd -g 10000 group01
+[ec2-user@ip-172-31-22-184 ~]$ tail /etc/group
+tss:x:59:
+polkitd:x:996:
+ssh_keys:x:995:
+unbound:x:994:
+sssd:x:993:
+chrony:x:992:
+sshd:x:74:
+ec2-user:x:1000:
+operator3:x:1001:
+group01:x:10000:
+
+[ec2-user@ip-172-31-22-184 ~]$ sudo groupadd -r group02
+[ec2-user@ip-172-31-22-184 ~]$ tail /etc/group
+polkitd:x:996:
+ssh_keys:x:995:
+unbound:x:994:
+sssd:x:993:
+chrony:x:992:
+sshd:x:74:
+ec2-user:x:1000:
+operator3:x:1001:
+group01:x:10000:
+group02:x:991:
+
+[ec2-user@ip-172-31-22-184 ~]$ sudo groupmod -n group0022 group02
+[ec2-user@ip-172-31-22-184 ~]$ tail /etc/group
+polkitd:x:996:
+ssh_keys:x:995:
+unbound:x:994:
+sssd:x:993:
+chrony:x:992:
+sshd:x:74:
+ec2-user:x:1000:
+operator3:x:1001:
+group01:x:10000:
+group0022:x:991:
+
+[ec2-user@ip-172-31-22-184 ~]$ sudo groupdel group0022
+
+[ec2-user@ip-172-31-22-184 ~]$ sudo useradd user02
+[ec2-user@ip-172-31-22-184 ~]$ id user02
+uid=1002(user02) gid=1002(user02) groups=1002(user02)
+[ec2-user@ip-172-31-22-184 ~]$ sudo usermod -g group01 user02
+[ec2-user@ip-172-31-22-184 ~]$ id user02
+uid=1002(user02) gid=10000(group01) groups=10000(group01)
+
+[ec2-user@ip-172-31-22-184 ~]$ sudo useradd user03
+[ec2-user@ip-172-31-22-184 ~]$ sudo usermod -aG group01 user03
+[ec2-user@ip-172-31-22-184 ~]$ id user03
+uid=1003(user03) gid=1003(user03) groups=1003(user03),10000(group01)
+```
+
+```console
+[root@ip-172-31-22-184 ~]# chage -l user03
+Last password change                                    : Jul 07, 2021
+Password expires                                        : never
+Password inactive                                       : never
+Account expires                                         : never
+Minimum number of days between password change          : 0
+Maximum number of days between password change          : 99999
+Number of days of warning before password expires       : 7
+[root@ip-172-31-22-184 ~]#
+[user01@host ~]$ sudo chage -m 0 -M 90 -W 7 -I 14 user03
+[user01@host ~]$ date -d "+45 days" -u
+Thu May 23 17:01:20 UTC 2019
+[user01@host ~]$ sudo usermod -L user03
+[user01@host ~]$ su - user03
+Password: redhat
+su: Authentication failure
+[user01@host ~]$ sudo usermod -L -e 2019-10-05 user03
+[user01@host ~]$ usermod -s /sbin/nologin user03
+[user01@host ~]$ su - user03
+Last login: Wed Feb  6 17:03:06 IST 2019 on pts/0
+This account is currently not available.
+
+[student@servera ~]$ sudo chage -M 90 operator1
+[student@servera ~]$ sudo chage -l operator1
+Last password change      : Jan 25, 2019
+Password expires          : Apr 25, 2019
+Password inactive         : never
+Account expires           : never
+Minimum number of days between password change    : 0
+Maximum number of days between password change    : 90
+Number of days of warning before password expires : 7
+
+
+[student@servera ~]$ sudo chage -d 0 operator1
+[student@servera ~]$ date -d "+180 days" +%F
+2019-07-24
+[student@servera ~]$ sudo chage -E 2019-07-24 operator1
+[student@servera ~]$ sudo chage -l operator1
+Last password change      : Jan 25, 2019
+Password expires          : Apr 25, 2019
+Password inactive         : never
+Account expires           : Jul 24, 2019
+Minimum number of days between password change    : 0
+Maximum number of days between password change    : 90
+Number of days of warning before password expires : 7
+
+
+ /etc/login.defs.
+
+ ...output omitted...
+# Password aging controls:
+#
+#       PASS_MAX_DAYS   Maximum number of days a password may be
+#       used.
+#       PASS_MIN_DAYS   Minimum number of days allowed between
+#       password changes.
+#       PASS_MIN_LEN    Minimum acceptable password length.
+#       PASS_WARN_AGE   Number of days warning given before a
+#       password expires.
+#
+PASS_MAX_DAYS   30
+PASS_MIN_DAYS   0
+PASS_MIN_LEN    5
+PASS_WARN_AGE   7
+...output omitted...
+
+[student@serverb ~]$ sudo groupadd -g 35000 consultants
+
+/etc/sudoers.d/consultants
+%consultants  ALL=(ALL) ALL
+
+[student@serverb ~]$ sudo useradd -G consultants consultant1
+[student@serverb ~]$ sudo useradd -G consultants consultant2
+[student@serverb ~]$ sudo useradd -G consultants consultant3
+
+[student@serverb ~]$ date -d "+90 days" +%F
+2019-04-28
+[student@serverb ~]$ sudo chage -E 2019-04-28 consultant1
+[student@serverb ~]$ sudo chage -E 2019-04-28 consultant2
+[student@serverb ~]$ sudo chage -E 2019-04-28 consultant3
+
+[student@serverb ~]$ sudo chage -M 15 consultant2
+
+[student@serverb ~]$ sudo chage -d 0 consultant1
+[student@serverb ~]$ sudo chage -d 0 consultant2
+[student@serverb ~]$ sudo chage -d 0 consultant3
+```
