@@ -1196,15 +1196,74 @@ PASS_WARN_AGE   7
 [student@serverb ~]$ sudo useradd -G consultants consultant2
 [student@serverb ~]$ sudo useradd -G consultants consultant3
 
+Determine the date 90 days in the future.
 [student@serverb ~]$ date -d "+90 days" +%F
 2019-04-28
+
+Set the account to expire on the date displayed in the preceding step.
 [student@serverb ~]$ sudo chage -E 2019-04-28 consultant1
 [student@serverb ~]$ sudo chage -E 2019-04-28 consultant2
 [student@serverb ~]$ sudo chage -E 2019-04-28 consultant3
 
+Change the password policy for the consultant2 account to require a new password every 15 days
+
 [student@serverb ~]$ sudo chage -M 15 consultant2
 
+Set the last day of th epassword change to 0 so that the users are forced to chance the password whenever they log in to the system for the first time
 [student@serverb ~]$ sudo chage -d 0 consultant1
 [student@serverb ~]$ sudo chage -d 0 consultant2
 [student@serverb ~]$ sudo chage -d 0 consultant3
+```
+
+## Chapter 7. Controlling Access to Files
+
+```console
+The -l option of the ls command shows detailed information about permissions and ownership:
+[user@host~]$ ls -l test
+-rw-rw-r--. 1 student student 0 Feb  8 17:36 test
+
+Use the -d option to show detailed information about a directory itself, and not its contents.
+[user@host ~]$ ls -ld /home
+drwxr-xr-x. 5 root root 4096 Jan 31 22:00 /home
+
+The first character of the long listing is the file type, interpreted like this:
+
+- is a regular file.
+
+d is a directory.
+
+l is a soft link.
+
+Other characters represent hardware devices (b and c) or other special-purpose files (p and s).
+
+The next nine characters are the file permissions. These are in three sets of three characters: permissions that apply to the user that owns the file, the group that owns the file, and all other users. 
+If the set shows rwx, that category has all three permissions, read, write, and execute. If a letter has been replaced by -, then that category does not have that permission.
+
+------
+Use the chown command to change the group ownership of the consultants directory to consultants.
+[root@servera ~]# chown :consultants /home/consultants
+
+Use the ls command to confirm that the permissions of the consultants group allow 
+its group members to create files in, and delete files from the /home/consultants directory.
+[root@servera ~]# ls -ld /home/consultants
+drwxr-xr-x.  2 root    consultants       6 Feb  1 12:08 /home/consultants
+
+[root@servera ~]# chmod g+w /home/consultants
+[root@servera ~]# ls -ld /home/consultants
+drwxrwxr-x. 2 root consultants 6 Feb  1 13:21 /home/consultants 
+
+
+Use the chmod command to forbid others from accessing files in the /home/consultants directory.
+[root@servera ~]# chmod 770 /home/consultants
+[root@servera ~]# ls -ld /home/consultants
+drwxrwx---. 2 root consultants 6 Feb  1 12:08 /home/consultants/
+
+------
+Use the chown command to change the group ownership of the consultant1.txt file to consultants.
+[consultant1@servera consultants]$ chown :consultants consultant1.txt
+[consultant1@servera consultants]$ ls -l consultant1.txt
+-rw-rw-r--. 1 consultant1 consultants 0 Feb  1 12:53 consultant1.txt
+
+
+
 ```
